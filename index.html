@@ -5,31 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dijital Rehber | İnternetten Para Kazanma</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; }
-        header { background: #2c3e50; color: #fff; padding: 30px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
-        h1 { margin: 0; font-size: 28px; }
-        .category-title { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 20px; font-size: 22px; }
-        .article-card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border-left: 5px solid #e74c3c; }
-        .article-card:hover { transform: translateY(-5px); }
-        .article-card h3 { margin-top: 0; color: #2c3e50; }
-        .article-card p { color: #666; font-size: 15px; }
-        .read-more { display: inline-block; background: #3498db; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; }
+        /* Genel Site Ayarları */
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f2f6; color: #2f3542; }
+        
+        /* Üst Menü (Navbar) */
+        header { background-color: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .logo { font-size: 24px; font-weight: 900; color: #ff4757; text-decoration: none; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: #2f3542; font-weight: 700; font-size: 15px; transition: color 0.2s; text-transform: uppercase; }
+        .nav-links a:hover { color: #ff4757; }
+        
+        /* Ana Taşıyıcı (İkili Sütun Sistemi) */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        /* Mobilde (Telefonda) Tek Sütuna Düşme Ayarı */
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; } 
+            .nav-links { display: none; } /* Mobilde üst menüyü kalabalık yapmasın diye gizledik */
+        }
+
+        /* SOL TARAF - Makale Listesi */
+        .main-content { display: flex; flex-direction: column; gap: 20px; }
+        
+        /* Makale Kartı Tasarımı */
+        .article-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; transition: transform 0.2s; text-decoration: none; color: inherit; height: 200px; }
+        .article-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        
+        /* Kart Resmi (Otomatik internetten çekecek) */
+        .article-image { width: 40%; background-color: #dfe4ea; background-image: url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop'); background-size: cover; background-position: center; }
+        
+        /* Kart Yazıları */
+        .article-content { width: 60%; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .category-tag { font-size: 12px; font-weight: 800; color: #ff4757; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .article-title { font-size: 20px; font-weight: 800; margin: 0 0 10px 0; line-height: 1.3; }
+        .article-desc { font-size: 14px; color: #57606f; margin: 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Telefondaki Kart Görünümü (Resim üstte, yazı altta) */
+        @media (max-width: 600px) {
+            .article-card { flex-direction: column; height: auto; }
+            .article-image { width: 100%; height: 200px; }
+            .article-content { width: 100%; }
+        }
+
+        /* SAĞ TARAF - Sidebar (En Çok Okunanlar) */
+        .sidebar { background: #fff; border-radius: 8px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); height: fit-content; }
+        .sidebar-title { font-size: 18px; font-weight: 800; margin-top: 0; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #f1f2f6; position: relative; }
+        .sidebar-title::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 40px; height: 3px; background-color: #ff4757; }
+        
+        .trend-item { margin-bottom: 15px; text-decoration: none; display: block; }
+        .trend-item:last-child { margin-bottom: 0; }
+        .trend-number { color: #ff4757; font-weight: 900; font-size: 18px; float: left; margin-right: 10px; line-height: 1.2; }
+        .trend-title { color: #2f3542; font-size: 14px; font-weight: 600; line-height: 1.4; transition: color 0.2s; }
+        .trend-item:hover .trend-title { color: #ff4757; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🚀 Dijital Rehber</h1>
-        <p>İnternetten Kazanç ve Teknoloji Stratejileri</p>
+        <div class="nav-container">
+            <a href="index.html" class="logo">DİJİTAL REHBER</a>
+            <div class="nav-links">
+                <a href="#">Yapay Zeka</a>
+                <a href="#">Kazanç Yolları</a>
+                <a href="#">Sosyal Medya</a>
+            </div>
+        </div>
     </header>
 
-    <h2 class="category-title">📂 Kategori: Yapay Zeka ile Para Kazanma</h2>
+    <div class="container">
+        
+        <div class="main-content">
+            
+            <a href="youtube-rehberi.html" class="article-card">
+                <div class="article-image"></div>
+                <div class="article-content">
+                    <span class="category-tag">Yapay Zeka</span>
+                    <h2 class="article-title">Yüzünü Göstermeden YouTube'dan Para Kazanma Rehberi (A'dan Z'ye)</h2>
+                    <p class="article-desc">Kamera yok, mikrofon yok! Sadece yapay zeka araçlarını kullanarak sıfırdan İngilizce bir YouTube kanalı nasıl kurulur? Hangi araçlar kullanılmalı? Adım adım tam rehber.</p>
+                </div>
+            </a>
 
-    <div class="article-card">
-        <h3>🎬 Yüzünü Göstermeden YouTube'dan Para Kazanma Rehberi (A'dan Z'ye)</h3>
-        <p>Kamera yok, mikrofon yok! Sadece yapay zeka araçlarını kullanarak sıfırdan İngilizce bir YouTube kanalı nasıl kurulur? Hangi araçlar kullanılmalı? Adım adım tam rehber.</p>
-        <a href="youtube-rehberi.html" class="read-more">Makaleyi Oku →</a>
+            </div>
+
+        <div class="sidebar">
+            <h3 class="sidebar-title">En Çok Okunanlar</h3>
+            
+            <a href="youtube-rehberi.html" class="trend-item">
+                <span class="trend-number">1</span>
+                <span class="trend-title">Yüzünü Göstermeden YouTube Kanalı Kurmak</span>
+            </a>
+            <a href="#" class="trend-item">
+                <span class="trend-number">2</span>
+                <span class="trend-title">2026'da İnternetten Para Kazandıran 3 Kesin Yol</span>
+            </a>
+            <a href="#" class="trend-item">
+                <span class="trend-number">3</span>
+                <span class="trend-title">Midjourney ile Grafik Tasarım Yaparak Dolar Kazanmak</span>
+            </a>
+        </div>
+
     </div>
 
-    </body>
+</body>
 </html>
